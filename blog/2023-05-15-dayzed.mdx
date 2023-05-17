@@ -1,0 +1,196 @@
+---
+slug: dayzed
+title: Dayzed - React Date Picker
+authors: [tarik]
+tags: [react]
+---
+
+## My toughts on Dayzed
+
+Dayzed on first look was little bit confusing. Their offical documentation is little bit scattered. But after some reading and exploring other developers code I got hang of it. It is very powerful library and it is very easy to use. It is also very customizable. I would recommend it to anyone who is looking for date picker library.
+
+Now I think I will use it for all of my projects that require date picker.
+
+## How to install Dayzed
+
+```bash
+pnpm install dayzed
+```
+
+## How to use Dayzed
+
+:::note
+Dayzed hooks will be used in this example.
+:::
+
+First create two control states in parent page
+
+```tsx
+import React from "react";
+
+export default function Parent() {
+	const [date, setDate] = React.useState<Date>(new Date());
+
+	// We are setting selected date to today because
+	// we want to show today's date selected when user
+	// opens date picker
+
+	const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
+
+	return <div>Date picker goes here</div>;
+}
+```
+
+Now we create Date picker component
+
+```tsx
+import React from "react";
+import { useDayzed } from "dayzed";
+
+const DaysInWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+type Props = {
+	date: Date;
+	setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
+	selectedDate: Date;
+};
+
+export default function DatePicker({
+	date,
+	setSelectedDate,
+	selectedDate,
+}: Props) {
+	const { calendars, getBackProps, getForwardProps, getDateProps } = useDayzed(
+		{
+			date,
+			onDateSelected: ({ date }) => {
+				setSelectedDate(date);
+			},
+			selected: selectedDate,
+		}
+	);
+
+	return (
+		<div>
+			<table>
+				{DaysInWeek.map((day) => (
+					<th>{day}</th>
+				))}
+				{calendars.map((calendar) => (
+					<>
+						{calendar.weeks.map((week, index) => {
+							return (
+								<tr>
+									{week.map((day, index) => {
+										if (!day) return null;
+										return (
+											<td key={index} {...getDateProps}>
+												{day.date.getDate()}
+											</td>
+										);
+									})}
+								</tr>
+							);
+						})}
+					</>
+				))}
+			</table>
+		</div>
+	);
+}
+```
+
+:::tip
+If you are using TypeScript it is important to add `day` check to get date intellisense.
+
+```tsx
+{
+	week.map((day, index) => {
+		// highlight-start
+		if (!day) return null;
+		// highlight-end
+		return (
+			<td key={index} {...getDateProps}>
+				{day.date.getDate()}
+			</td>
+		);
+	});
+}
+```
+
+:::
+
+Now lets expain what is going on here. To get all nessesary props we need to call `useDayzed` hook. It returns us `calendars`, `getBackProps`, `getForwardProps` and `getDateProps`.
+
+`calendars` is array of calendars. We can have multiple calendars if we want to. For example if we want to show two months at the same time. Two calendars is mosty used when we need to select date range.
+
+If you need single calendar just loop over `calendars[0]`.
+
+To expose selection feature to date picker we need to pass `{...getDateProps}` to element witch will be responsible for selecting date. In this case it is `td` element.
+
+Next step is to insert Datepicker component to parent component.
+
+```tsx
+import React from "react";
+import Datepicker from "./Datepicker";
+
+export default function App() {
+	const [date, setDate] = React.useState<Date>(new Date());
+
+	// We are setting selected date to today because
+	// we want to show today's date selected when user
+	// opens date picker
+
+	const [selectedDate, setSelectedDate] = React.useState<Date>(new Date());
+
+	return (
+		<div>
+			// highlight-start
+			<Datepicker
+				date={date}
+				selectedDate={selectedDate}
+				setSelectedDate={setSelectedDate}
+			/>
+			// highlight-end
+		</div>
+	);
+}
+```
+
+## Show selected date
+
+To show selected date we need to add style to `td` element. We can do that by adding `style` prop to `td` element. Then we check if `day.selected` is true. If it is we add `backgroundColor` to `style` prop. Also to make clickable we pass object with `dateObj` to `...getDateProps` function. Example:
+
+```tsx
+<td
+	key={index}
+	// highlight-start
+	{...getDateProps({ dateObj: day })}
+	style={{
+		backgroundColor: day.selected ? "red" : "white",
+	}}
+	// highlight-end
+>
+	{day.date.getDate()}
+</td>
+```
+
+## Changing months
+
+To change months we need to add two buttons with `...getBackProps` and `...getForwardProps` to them, you can insert them anywhere in Datepicker component. Example:
+
+```tsx
+<div>
+	<button {...getBackProps({ calendars })}>Prev month</button>
+	<button {...getForwardProps({ calendars })}>Next month</button>
+</div>
+```
+
+## Conclusion
+
+It is amazing how much abstraction Dayzed provides. It is very easy to use and it is very customizable. I would recommend it to anyone who need to build date picker with custom UI.
+
+## Links
+
+-  Dayzed offical documentation: [https://dayzed.netlify.app/](https://dayzed.netlify.app/)
+-  CodesandBox example: [https://codesandbox.io/s/dayzed-calendar-example-8rx3bs](https://codesandbox.io/s/dayzed-calendar-example-8rx3bs)

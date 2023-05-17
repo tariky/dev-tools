@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 58 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <rect id="Artboard1" x="0" y="0" width="57.904" height="35" style="fill:none;"/>
+    <g id="Artboard11" serif:id="Artboard1">
+        <g transform="matrix(1.74832,0,0,1.07325,-6.42285,-1.42022)">
+            <path d="M34.088,11.296C34.088,7.801 32.346,4.964 30.201,4.964L9.217,4.964C7.071,4.964 5.329,7.801 5.329,11.296L5.329,23.961C5.329,27.456 7.071,30.294 9.217,30.294L30.201,30.294C32.346,30.294 34.088,27.456 34.088,23.961L34.088,11.296Z"/>
+        </g>
+        <g transform="matrix(0.374098,0,0,0.374098,-0.839263,20.6945)">
+            <text x="22.287px" y="16.265px" style="font-family:'AktivGrotesk-Medium', sans-serif;font-size:25px;fill:white;">ESC</text>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,34 @@
+---
+slug: cap-rover
+title: CapRover - Best cPanel replacement
+authors: [tarik]
+tags: [self-hosting]
+---
+
+## What is CapRover?
+
+You are probably familiar with cPanel, a web hosting control panel that allows you to manage your websites, databases, and other services. CapRover is a self-hosted, open-source alternative to cPanel. It is a web-based app deployment &amp; management platform for your Docker-compose apps. It is a free and open-source project that you can install on your own server. It is a great tool for developers and system administrators who want to deploy their apps quickly and easily.
+
+## What are requirements?
+
+To see all requirements visit CapRover documentation website
+
+[CapRover Documentation](https://caprover.com/docs/get-started.html)
+
+## Info you will not find in documentation
+
+If you want to install CapRover to ARM64 server you are out of luck. Currently automatic installation does not work. You will need to compile code for yourself.
+
+## Installation
+
+To install CapRover run this command:
+
+```bash
+docker run -p 80:80 -p 443:443 -p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock -v /captain:/captain caprover/caprover
+```
+
+After installation is finished wait for about 30sec to 1 min for everything to start.
+
+Then visit `caprover.[SERVER_IP]`
+
+Default password is `captain42`
